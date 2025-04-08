@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Segnalazioni Forze dell'Ordine</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px auto;
+      max-width: 600px;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #25D366;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1ebd59;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Invia Segnalazione</h2>
+
+  <label for="datetime">Data e Ora</label>
+  <input type="datetime-local" id="datetime" />
+
+  <label for="position">Posizione (link Google Maps)</label>
+  <input type="url" id="position" placeholder="https://maps.google.com/..." />
+
+  <label for="type">Tipo di Forze dell'Ordine</label>
+  <input type="text" id="type" placeholder="es. Polizia, Carabinieri, Guardia di Finanza..." />
+
+  <label for="comment">Commento</label>
+  <textarea id="comment" rows="3" placeholder="Scrivi un commento..."></textarea>
+
+  <label for="photo">Foto (non inviata, solo per tuo riferimento)</label>
+  <input type="file" id="photo" accept="image/*" disabled />
+
+  <button onclick="sendMessage()">Invia su WhatsApp</button>
+
+  <script>
+    function sendMessage() {
+      const datetime = document.getElementById('datetime').value;
+      const position = document.getElementById('position').value;
+      const type = document.getElementById('type').value;
+      const comment = document.getElementById('comment').value;
+
+      const message = `🚨 *Segnalazione Forze dell'Ordine* 🚨%0A
+📅 Data/Ora: ${datetime}%0A
+📍 Posizione: ${position}%0A
+👮 Tipo: ${type}%0A
+📝 Commento: ${comment}`;
+
+      const encodedMsg = encodeURI(message);
+      const whatsappUrl = `https://wa.me/?text=${encodedMsg}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  </script>
+
+</body>
+</html>
